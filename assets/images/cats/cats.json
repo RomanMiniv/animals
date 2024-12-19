@@ -1,0 +1,92 @@
+{"frames": [
+
+{
+	"filename": "caracal.jpg",
+	"frame": {"x":2,"y":2,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "cheetah.webp",
+	"frame": {"x":316,"y":2,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "cougar.webp",
+	"frame": {"x":630,"y":2,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "jaguar.jpg",
+	"frame": {"x":2,"y":316,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "leopard.jpg",
+	"frame": {"x":316,"y":316,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "lion.webp",
+	"frame": {"x":630,"y":316,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "lynx.webp",
+	"frame": {"x":2,"y":630,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "serval.jpg",
+	"frame": {"x":316,"y":630,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "tiger.webp",
+	"frame": {"x":630,"y":630,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "wildcat.jpg",
+	"frame": {"x":2,"y":944,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "cats.png",
+	"format": "RGBA8888",
+	"size": {"w":944,"h":1258},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d722936462f70223fe5aef132770300c:74feebb6d9994a5248b83f27de50b6d4:0e676485ec7c3fccdf71604304a33e54$"
+}
+}

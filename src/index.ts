@@ -1,1 +1,3 @@
-import "./game/game";
+import Game from "./game/game";
+
+const game = new Game();

@@ -9,6 +9,12 @@
     "strictPropertyInitialization": false,
     "resolveJsonModule": true,
     "strictNullChecks": false,
+    "paths": {
+      "@assets/*": ["./assets/*"],
+      "@configs/*": ["./configs/*"],
+      "@utils": ["./src/utils"],
+      "@shared": ["./src/shared"],
+    }
 	},
   "include": [
     "src",
