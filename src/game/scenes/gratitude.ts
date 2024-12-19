@@ -16,7 +16,7 @@ export class Gratitude extends Scene {
 
     setTimeout(() => {
       this.finishCallback(EScene.INTRO);
-    }, 10000);
+    }, 7500);
   }
 
   gameRender(): void {
