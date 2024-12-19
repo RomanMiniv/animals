@@ -23,7 +23,7 @@ export class Gratitude extends Scene {
     super.gameRender();
 
     this.title.forEach((part, index) => {
-      GameEngine.drawTextScreen(part, GameEngine.vec2(GameEngine.mainCanvasSize.x / 2, GameEngine.mainCanvasSize.y / 3 + index * this.size * 2), 24, GameEngine.rgb(0, 128, 128, 1), undefined, undefined, undefined, "Courier New");
+      GameEngine.drawTextScreen(part, GameEngine.vec2(GameEngine.mainCanvasSize.x / 2, GameEngine.mainCanvasSize.y / 3 + index * this.size * 2), this.size, GameEngine.rgb(0, 128, 128, 1), undefined, undefined, undefined, "Courier New");
     });
   }
 }
