@@ -36,14 +36,15 @@ export class Level extends Scene {
     }
 
     cats.forEach(cat => {
+      const catCopy = Object.assign({}, cat);
       let lastIndex: number = this.cats.length - 1;
       if (this.cats[lastIndex]?.length === 2) {
         lastIndex++;
       }
       if (!Array.isArray(this.cats[lastIndex])) {
-        this.cats.push([cat]);
+        this.cats.push([catCopy]);
       } else {
-        this.cats[lastIndex].push(cat);
+        this.cats[lastIndex].push(catCopy);
       }
     });
 
