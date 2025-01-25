@@ -26,17 +26,17 @@ export default class Game implements IEngineScene {
     );
   }
 
-  nextScene(sceneIndex?: number): void {
+  nextScene(sceneIndex?: number, data?: unknown): void {
     this.activeSceneIndex = sceneIndex ?? this.activeSceneIndex + 1;
     this.scenes = [].concat(this.sceneFactory());
-    this.scenes.forEach(scene => scene.gameInit());
+    this.scenes.forEach(scene => scene.gameInit(data));
   }
 
   sceneFactory(): Scene | Scene[] {
     switch (this.activeSceneIndex) {
       case EScene.INTRO:
         return new Intro((sceneIndex: EScene) => {
-          this.nextScene(sceneIndex);
+          this.nextScene(sceneIndex, catsConfig);
         });
       case EScene.LEVEL:
         return new Level((sceneIndex: EScene) => {

@@ -1,3 +1,16 @@
+export interface IAnimals {
+  imageSpritePath: string;
+  spriteInfo: ISprite;
+  animals: IAnimal[];
+}
+
+export interface IAnimal {
+  name: string;
+  imagePath: string;
+  soundPath: string;
+  isActiveSound?: boolean;
+}
+
 export interface ISprite {
   frames: ISpriteFrame[];
 }

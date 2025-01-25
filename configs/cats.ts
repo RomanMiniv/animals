@@ -1,4 +1,4 @@
-import catsImageSprite from "@assets/images/cats/cats.png";
+import catsSprite from "@assets/images/cats/cats.png";
 import catsSpriteInfo from "@assets/images/cats/cats.json";
 
 // TODO: make audio sprite
@@ -12,25 +12,12 @@ import lynxSoundPath from "@assets/sounds/cats/lynx.mp3";
 import servalSoundPath from "@assets/sounds/cats/serval.mp3";
 import tigerSoundPath from "@assets/sounds/cats/tiger.mp3";
 import wildcatSoundPath from "@assets/sounds/cats/wildcat.mp3";
-import { ISprite } from "../src/game/interfaces";
+import { IAnimals } from "../src/game/interfaces";
 
-export interface ICats {
-  imageSpritePath: string;
-  spriteInfo: ISprite;
-  cats: ICat[];
-}
-
-export interface ICat {
-  name: string;
-  imagePath: string;
-  soundPath: string;
-  isActiveSound?: boolean;
-};
-
-export const catsConfig: ICats = {
-  imageSpritePath: catsImageSprite,
+export const catsConfig: IAnimals = {
+  imageSpritePath: catsSprite,
   spriteInfo: catsSpriteInfo,
-  cats: [
+  animals: [
     {
       name: "caracal",
       imagePath: "caracal.jpg",

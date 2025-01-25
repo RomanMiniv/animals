@@ -1,12 +1,13 @@
 import GameEngine from "../gameEngine";
 import { Scene } from "./scene";
-import { catsConfig, ICat } from "@configs/cats";
 import { getRandomIntInclusive, setTimer, shuffle } from "@utils";
 import { Emoji } from "@shared";
 import { EScene } from "../game";
+import { IAnimal, IAnimals } from "../interfaces";
 
 export class Level extends Scene {
-  cats: ICat[][];
+  animalsConfig: IAnimals;
+  animals: IAnimal[][];
   images: GameEngine.EngineObject[];
   sound: GameEngine.SoundWave;
 
@@ -14,42 +15,43 @@ export class Level extends Scene {
   isAvailableNextStep: boolean;
   isFinish: boolean;
 
-  gameInit(): void {
-    super.gameInit();
-    // TODO: take config as parameter from LevelManager, not from import
+  gameInit(data?: unknown): void {
+    super.gameInit(data);
+    this.animalsConfig = this.data as IAnimals;
 
-    this.initCats();
+    // TODO: take config as parameter from LevelManager, not from import
+    this.initAnimals();
     this.currentStep = 0;
 
     this.nextStep();
   }
 
-  initCats(): void {
+  initAnimals(): void {
     this.images = [];
-    this.cats = [];
+    this.animals = [];
 
-    const { cats } = catsConfig;
+    const { animals } = this.animalsConfig;
 
-    shuffle(cats);
-    if (cats.length % 2 !== 0) {
+    shuffle(animals);
+    if (animals.length % 2 !== 0) {
       throw new Error("Number of elements must be even.");
     }
 
-    cats.forEach(cat => {
-      const catCopy = Object.assign({}, cat);
-      let lastIndex: number = this.cats.length - 1;
-      if (this.cats[lastIndex]?.length === 2) {
+    animals.forEach(animal => {
+      const animalCopy = Object.assign({}, animal);
+      let lastIndex: number = this.animals.length - 1;
+      if (this.animals[lastIndex]?.length === 2) {
         lastIndex++;
       }
-      if (!Array.isArray(this.cats[lastIndex])) {
-        this.cats.push([catCopy]);
+      if (!Array.isArray(this.animals[lastIndex])) {
+        this.animals.push([animalCopy]);
       } else {
-        this.cats[lastIndex].push(catCopy);
+        this.animals[lastIndex].push(animalCopy);
       }
     });
 
-    this.cats.forEach(cats => {
-      cats[getRandomIntInclusive(0, cats.length - 1)].isActiveSound = true;
+    this.animals.forEach(animals => {
+      animals[getRandomIntInclusive(0, animals.length - 1)].isActiveSound = true;
     });
   }
 
@@ -58,7 +60,7 @@ export class Level extends Scene {
     this.isAvailableNextStep = true;
 
     this.sound?.stop();
-    const { soundPath } = this.cats[this.currentStep].find(cat => cat.isActiveSound);
+    const { soundPath } = this.animals[this.currentStep].find(animal => animal.isActiveSound);
     this.sound = new GameEngine.SoundWave(soundPath, undefined, undefined, undefined, () => {
       this.sound.play(undefined, undefined, undefined, undefined, true);
     });
@@ -68,14 +70,14 @@ export class Level extends Scene {
 
   setImages(): void {
     const offset = 64;
-    const imageSize = catsConfig.spriteInfo.frames[0].frame.w;
+    const imageSize = this.animalsConfig.spriteInfo.frames[0].frame.w;
     const y = GameEngine.mainCanvasSize.y / 7;
 
     this.clearImages()
 
-    this.cats[this.currentStep].forEach((cat, index) => {
-      const textureInfoIndex = (GameEngine.textureInfos as GameEngine.TextureInfo[]).findIndex(textureInfo => textureInfo.image.currentSrc === catsConfig.imageSpritePath); // TODO: clarify type as GameEngine.TextureInfo[]
-      const { frame } = catsConfig.spriteInfo.frames.find(frame => frame.filename === cat.imagePath);
+    this.animals[this.currentStep].forEach((animal, index) => {
+      const textureInfoIndex = (GameEngine.textureInfos as GameEngine.TextureInfo[]).findIndex(textureInfo => textureInfo.image.currentSrc === this.animalsConfig.imageSpritePath); // TODO: clarify type as GameEngine.TextureInfo[]
+      const { frame } = this.animalsConfig.spriteInfo.frames.find(frame => frame.filename === animal.imagePath);
 
       const pos = !index ? GameEngine.vec2(-imageSize / 2 - offset, y) : GameEngine.vec2(+imageSize / 2 + offset, y);
 
@@ -111,9 +113,9 @@ export class Level extends Scene {
       if (GameEngine.isOverlapping(image.pos, image.size, this.cursorImage.pos, this.cursorImage.size)) {
         this.isAvailableNextStep = false;
 
-        const isWin: boolean = !!this.cats[this.currentStep][i].isActiveSound;
+        const isWin: boolean = !!this.animals[this.currentStep][i].isActiveSound;
 
-        if (++this.currentStep === this.cats.length) {
+        if (++this.currentStep === this.animals.length) {
           this.isFinish = true;
         }
 
@@ -205,7 +207,7 @@ export class Level extends Scene {
 
   renderStatus(): void {
     const size = 18;
-    const text = `${this.currentStep} / ${this.cats.length}    ${Emoji.CAT}`;
+    const text = `${this.currentStep} / ${this.animals.length}    ${Emoji.CAT}`;
     GameEngine.drawTextScreen(text, GameEngine.vec2(text.length * 5, size * 1.5), size, GameEngine.rgb(1, 1, 1, 1));
   }
 
@@ -229,11 +231,12 @@ export class Level extends Scene {
     if (!this.isFinish && !this.isAvailableNextStep) {
       currentStep--;
     }
-    const cats = this.cats[currentStep];
+    const animals = this.animals[currentStep];
     const size = 36;
-    GameEngine.drawTextScreen(cats[0].name, GameEngine.vec2(GameEngine.mainCanvasSize.x / 3.4, GameEngine.mainCanvasSize.y / 1.6), size, GameEngine.rgb(1, 1, 1, 1));
-    GameEngine.drawTextScreen(cats[1].name, GameEngine.vec2(GameEngine.mainCanvasSize.x - GameEngine.mainCanvasSize.x / 3.4, GameEngine.mainCanvasSize.y / 1.6), size, GameEngine.rgb(1, 1, 1, 1));
+    GameEngine.drawTextScreen(animals[0].name, GameEngine.vec2(GameEngine.mainCanvasSize.x / 3.4, GameEngine.mainCanvasSize.y / 1.6), size, GameEngine.rgb(1, 1, 1, 1));
+    GameEngine.drawTextScreen(animals[1].name, GameEngine.vec2(GameEngine.mainCanvasSize.x - GameEngine.mainCanvasSize.x / 3.4, GameEngine.mainCanvasSize.y / 1.6), size, GameEngine.rgb(1, 1, 1, 1));
 
+    // TODO: provide as parameter
     this.setHint("Which cat purrs?");
   }
 }

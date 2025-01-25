@@ -3,6 +3,7 @@ import GameEngine, { IEngineScene } from "../gameEngine";
 import CatPawPath from "@assets/images/paw.png";
 
 export abstract class Scene implements IEngineScene {
+  data: unknown;
   animations: Map<string, () => void>;
   cursorImage: GameEngine.EngineObject;
 
@@ -16,7 +17,8 @@ export abstract class Scene implements IEngineScene {
     this.animations = new Map();
   }
 
-  gameInit(): void {
+  gameInit(data?: unknown): void {
+    this.data = data;
     this.setCursorImage();
   }
 
