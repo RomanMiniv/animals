@@ -67,7 +67,7 @@ export const catsConfig: IAnimals = {
       soundPath: tigerSoundPath
     },
     {
-      name: "wildcat",
+      name: "Wild cat",
       imagePath: "wildcat.jpg",
       soundPath: wildcatSoundPath
     },
