@@ -1,18 +1,19 @@
 import { setTimer } from "@utils";
 import GameEngine, { IEngineScene } from "../gameEngine";
 import CatPawPath from "@assets/images/paw.png";
+import { EScene, TSceneFinishCallback } from "../game";
 
 export abstract class Scene implements IEngineScene {
   data: unknown;
   animations: Map<string, () => void>;
   cursorImage: GameEngine.EngineObject;
 
-  finishCallback: (data?: unknown) => void;
+  finishCallback: TSceneFinishCallback;
 
-  constructor(finishCallback: (data?: any) => void) {
-    this.finishCallback = (data?: any) => {
+  constructor(finishCallback: TSceneFinishCallback) {
+    this.finishCallback = (sceneIndex?: EScene, data?: unknown) => {
       this.finish();
-      finishCallback(data);
+      finishCallback(sceneIndex, data);
     };
     this.animations = new Map();
   }
@@ -63,7 +64,7 @@ export abstract class Scene implements IEngineScene {
     // TODO: delete animations
   }
 
-  setHint(text: string): void {
-    GameEngine.drawTextScreen(text, GameEngine.vec2(GameEngine.mainCanvasSize.x / 2, GameEngine.mainCanvasSize.y - GameEngine.mainCanvasSize.y / 4 + 48), 24, GameEngine.rgb(1, 1, 0, .8), undefined, undefined, undefined, "Courier New");
+  setHint(text: string, alpha: number = .8): void {
+    GameEngine.drawTextScreen(text, GameEngine.vec2(GameEngine.mainCanvasSize.x / 2, GameEngine.mainCanvasSize.y - GameEngine.mainCanvasSize.y / 4 + 48), 24, GameEngine.rgb(1, 1, 0, alpha), undefined, undefined, undefined, "Courier New");
   }
 }

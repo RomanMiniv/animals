@@ -18,3 +18,7 @@ export async function setTimer(time: number) {
     }, time);
   });
 }
+
+export const capitalize = (str: string): string => {
+  return str[0].toUpperCase() + str.slice(1);
+}

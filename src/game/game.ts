@@ -1,17 +1,23 @@
 import GameEngine, { IEngineScene } from "./gameEngine";
 import { Scene } from "./scenes/scene";
-import { catsConfig } from "../../configs/cats";
+import { animalsConfig } from "@configs/configs";
 import { Intro } from "./scenes/intro";
+import { LevelSelect } from "./scenes/levelSelect";
 import { Level } from "./scenes/level";
+import { LevelResult } from "./scenes/levelResult";
 import { Gratitude } from "./scenes/gratitude";
 
 import CatPawPath from "@assets/images/paw.png";
 
 export enum EScene {
   INTRO,
+  LEVEL_SELECT,
   LEVEL,
+  LEVEL_RESULT,
   GRATITUDE,
 }
+
+export type TSceneFinishCallback = (sceneIndex?: EScene, data?: unknown) => void;
 
 export default class Game implements IEngineScene {
   scenes: Scene[] = [];
@@ -22,7 +28,10 @@ export default class Game implements IEngineScene {
       this.gameInit.bind(this),
       this.gameUpdate.bind(this), this.gameUpdatePost.bind(this),
       this.gameRender.bind(this), this.gameRenderPost.bind(this),
-      [CatPawPath, catsConfig.imageSpritePath]
+      [
+        CatPawPath,
+        ...animalsConfig.map(_ => _.imageSpritePath),
+      ]
     );
   }
 
@@ -35,16 +44,24 @@ export default class Game implements IEngineScene {
   sceneFactory(): Scene | Scene[] {
     switch (this.activeSceneIndex) {
       case EScene.INTRO:
-        return new Intro((sceneIndex: EScene) => {
-          this.nextScene(sceneIndex, catsConfig);
+        return new Intro((sceneIndex?: EScene, data?: unknown) => {
+          this.nextScene(sceneIndex, data);
+        });
+      case EScene.LEVEL_SELECT:
+        return new LevelSelect((sceneIndex?: EScene, data?: unknown) => {
+          this.nextScene(sceneIndex, data);
         });
       case EScene.LEVEL:
-        return new Level((sceneIndex: EScene) => {
-          this.nextScene(sceneIndex);
+        return new Level((sceneIndex?: EScene, data?: unknown) => {
+          this.nextScene(sceneIndex, data);
+        });
+      case EScene.LEVEL_RESULT:
+        return new LevelResult((sceneIndex?: EScene, data?: unknown) => {
+          this.nextScene(sceneIndex, data);
         });
       case EScene.GRATITUDE:
-        return new Gratitude((sceneIndex: EScene) => {
-          this.nextScene(sceneIndex);
+        return new Gratitude((sceneIndex?: EScene, data?: unknown) => {
+          this.nextScene(sceneIndex, data);
         });
     }
   }

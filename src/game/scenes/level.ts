@@ -1,9 +1,15 @@
 import GameEngine from "../gameEngine";
 import { Scene } from "./scene";
-import { getRandomIntInclusive, setTimer, shuffle } from "@utils";
+import { capitalize, getRandomIntInclusive, setTimer, shuffle } from "@utils";
 import { Emoji } from "@shared";
 import { EScene } from "../game";
 import { IAnimal, IAnimals } from "../interfaces";
+
+export interface ILevelResult {
+  total: number;
+  correct: number;
+  badge: string;
+}
 
 export class Level extends Scene {
   animalsConfig: IAnimals;
@@ -14,15 +20,21 @@ export class Level extends Scene {
   currentStep: number;
   isAvailableNextStep: boolean;
   isFinish: boolean;
+  result: ILevelResult;
 
   gameInit(data?: unknown): void {
     super.gameInit(data);
     this.animalsConfig = this.data as IAnimals;
 
-    // TODO: take config as parameter from LevelManager, not from import
     this.initAnimals();
-    this.currentStep = 0;
 
+    this.result = {
+      total: this.animals.length,
+      correct: this.animals.length,
+      badge: this.animalsConfig.badge,
+    };
+
+    this.currentStep = 0;
     this.nextStep();
   }
 
@@ -121,7 +133,7 @@ export class Level extends Scene {
 
         this.setChoiceStatus(i, isWin).then(() => {
           if (this.isFinish) {
-            this.finishCallback(EScene.GRATITUDE);
+            this.finishCallback(EScene.LEVEL_RESULT, this.result);
           } else {
             this.nextStep();
           }
@@ -137,55 +149,62 @@ export class Level extends Scene {
     const duration: number = 2000;
 
     if (isWin) {
-      this.images[imageIndex].additiveColor = GameEngine.rgb(0, saturation, 0, 1);
-
-      const particleTime: number = (duration - 200) / 1000;
-      const color = GameEngine.rgb(0, saturation, 0, 1);
-      const particleEmitter = new GameEngine.ParticleEmitter(
-        this.images[imageIndex].pos, 0, // pos, angle
-        this.images[imageIndex].size, .1, 200, GameEngine.PI, // emitSize, emitTime, emitRate, emiteCone
-        undefined,  // tileInfo
-        color, color, // colorStartA, colorStartB
-        undefined, undefined, // colorEndA, colorEndB
-        // undefined, undefined, undefined, undefined,
-        particleTime, 20, 0, .1, .1,  // time, sizeStart, sizeEnd, speed, angleSpeed
-        .99, .95, 1, GameEngine.PI, // damp, angleDamp, gravity, cone
-        .1, .5, false, true // fade, randomness, collide, additive
-      );
-
-      await setTimer(duration);
-      particleEmitter.destroy();
+      await this.correctChoiceAnimation(imageIndex, saturation, duration);
     } else {
-      this.images[imageIndex].additiveColor = GameEngine.rgb(saturation, 0, 0, 1);
-
-      let deltaIterator: number = 0;
-      let deltaIteratorStep: number = 1;
-      let isFirstStep: boolean = true;
-      let direction: number = -1;
-      const initialDeltaOffset: number = 2;
-      await this.createAnimation("choiceStatus", () => {
-        let delta: number;
-        if (isFirstStep) {
-          delta = initialDeltaOffset;
-          isFirstStep = false;
-        } else {
-          delta = initialDeltaOffset * 2;
-        }
-
-        const offsets = [];
-        for (let i = 0; i < 2; i++) {
-          offsets.push(deltaIteratorStep * direction);
-        }
-
-        const { x, y } = this.images[imageIndex].pos;
-        this.images[imageIndex].pos = GameEngine.vec2(x + offsets[0], y);
-
-        if (++deltaIterator >= delta) {
-          direction *= -1;
-          deltaIterator = 0;
-        }
-      }, duration);
+      this.result.correct--;
+      await this.wrongChoiceAnimation(imageIndex, saturation, duration);
     }
+  }
+  async correctChoiceAnimation(imageIndex: number, saturation: number, duration: number): Promise<void> {
+    this.images[imageIndex].additiveColor = GameEngine.rgb(0, saturation, 0, 1);
+
+    const particleTime: number = (duration - 200) / 1000;
+    const color = GameEngine.rgb(0, saturation, 0, 1);
+    const particleEmitter = new GameEngine.ParticleEmitter(
+      this.images[imageIndex].pos, 0, // pos, angle
+      this.images[imageIndex].size, .1, 200, GameEngine.PI, // emitSize, emitTime, emitRate, emiteCone
+      undefined,  // tileInfo
+      color, color, // colorStartA, colorStartB
+      undefined, undefined, // colorEndA, colorEndB
+      // undefined, undefined, undefined, undefined,
+      particleTime, 20, 0, .1, .1,  // time, sizeStart, sizeEnd, speed, angleSpeed
+      .99, .95, 1, GameEngine.PI, // damp, angleDamp, gravity, cone
+      .1, .5, false, true // fade, randomness, collide, additive
+    );
+
+    await setTimer(duration);
+    particleEmitter.destroy();
+  }
+  async wrongChoiceAnimation(imageIndex: number, saturation: number, duration: number): Promise<void> {
+    this.images[imageIndex].additiveColor = GameEngine.rgb(saturation, 0, 0, 1);
+
+    let deltaIterator: number = 0;
+    let deltaIteratorStep: number = 1;
+    let isFirstStep: boolean = true;
+    let direction: number = -1;
+    const initialDeltaOffset: number = 2;
+    await this.createAnimation("wrongChoice", () => {
+      let delta: number;
+      if (isFirstStep) {
+        delta = initialDeltaOffset;
+        isFirstStep = false;
+      } else {
+        delta = initialDeltaOffset * 2;
+      }
+
+      const offsets = [];
+      for (let i = 0; i < 2; i++) {
+        offsets.push(deltaIteratorStep * direction);
+      }
+
+      const { x, y } = this.images[imageIndex].pos;
+      this.images[imageIndex].pos = GameEngine.vec2(x + offsets[0], y);
+
+      if (++deltaIterator >= delta) {
+        direction *= -1;
+        deltaIterator = 0;
+      }
+    }, duration);
   }
 
   finish(): void {
@@ -212,6 +231,8 @@ export class Level extends Scene {
   }
 
   renderStep(): void {
+    super.gameRender();
+
     for (let i = 0; i < this.images.length; i++) {
       const image = this.images[i];
       if (GameEngine.isOverlapping(image.pos, image.size, this.cursorImage.pos, this.cursorImage.size)) {
@@ -231,12 +252,15 @@ export class Level extends Scene {
     if (!this.isFinish && !this.isAvailableNextStep) {
       currentStep--;
     }
+
     const animals = this.animals[currentStep];
     const size = 36;
-    GameEngine.drawTextScreen(animals[0].name, GameEngine.vec2(GameEngine.mainCanvasSize.x / 3.4, GameEngine.mainCanvasSize.y / 1.6), size, GameEngine.rgb(1, 1, 1, 1));
-    GameEngine.drawTextScreen(animals[1].name, GameEngine.vec2(GameEngine.mainCanvasSize.x - GameEngine.mainCanvasSize.x / 3.4, GameEngine.mainCanvasSize.y / 1.6), size, GameEngine.rgb(1, 1, 1, 1));
+    animals.forEach((animal, index) => {
+      const image = this.images[index];
+      GameEngine.drawTextScreen(capitalize(animal.name), GameEngine.vec2(GameEngine.mainCanvasSize.x / 2 + image.pos.x, GameEngine.mainCanvasSize.y / 2 + image.pos.y - size / 2), size, GameEngine.rgb(1, 1, 1, 1));
+    });
 
     // TODO: provide as parameter
-    this.setHint("Which cat purrs?");
+    this.setHint(this.animalsConfig.soundText);
   }
 }

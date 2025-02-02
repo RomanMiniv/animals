@@ -1,0 +1,108 @@
+{"frames": [
+
+{
+	"filename": "Accipiter nisus.jpg",
+	"frame": {"x":2,"y":2,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Aegolius funereus.jpg",
+	"frame": {"x":316,"y":2,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Anas platyrhynchos.jpg",
+	"frame": {"x":630,"y":2,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Aquila chrysaetos.jpg",
+	"frame": {"x":2,"y":316,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Ardea cinerea.jpg",
+	"frame": {"x":316,"y":316,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Athene noctua.jpg",
+	"frame": {"x":630,"y":316,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Bubo scandiacus.jpg",
+	"frame": {"x":2,"y":630,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Buteo buteo.jpg",
+	"frame": {"x":316,"y":630,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Coturnix coturnix.jpg",
+	"frame": {"x":630,"y":630,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Pandion haliaetus.jpg",
+	"frame": {"x":2,"y":944,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Strix aluco.jpg",
+	"frame": {"x":316,"y":944,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+},
+{
+	"filename": "Tyto alba.jpg",
+	"frame": {"x":630,"y":944,"w":312,"h":312},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":312,"h":312},
+	"sourceSize": {"w":312,"h":312}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "birds.png",
+	"format": "RGBA8888",
+	"size": {"w":944,"h":1258},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ea6248c534f08aabb1d9b714259bff5b:38bd00b02b782c2e4f97d3e24eace55d:05064d7bb83a0e2b52752dd6e3168bce$"
+}
+}

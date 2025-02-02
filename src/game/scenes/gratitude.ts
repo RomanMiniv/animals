@@ -11,8 +11,8 @@ export class Gratitude extends Scene {
     "Good luck!"
   ];
 
-  gameInit(): void {
-    super.gameInit();
+  gameInit(data?: unknown): void {
+    super.gameInit(data);
 
     setTimeout(() => {
       this.finishCallback(EScene.INTRO);

@@ -17,6 +17,9 @@ import { IAnimals } from "../src/game/interfaces";
 export const catsConfig: IAnimals = {
   imageSpritePath: catsSprite,
   spriteInfo: catsSpriteInfo,
+  type: "cats",
+  soundText: "Which cat purrs?",
+  badge: "🐆",
   animals: [
     {
       name: "caracal",

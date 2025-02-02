@@ -1,6 +1,9 @@
 export interface IAnimals {
   imageSpritePath: string;
   spriteInfo: ISprite;
+  type: string;
+  soundText: string;
+  badge: string;
   animals: IAnimal[];
 }
 
